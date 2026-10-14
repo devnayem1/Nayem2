@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stachurski — Producent stojaków do transportu szyb i okien</title>
+<meta name="description" content="Stachurski — polski producent stojaków, wózków, palet i wyposażenia do transportu i magazynowania szyb i okien. Od 1974.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B263D'/%3E%3Cpath d='M32 10 14 54M32 10l18 44M22 36h20' stroke='%23fff' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='10' r='3' fill='%23B58B5A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B263D;--steel:#54758D;--gray:#E9EEF2;--bronze:#B58B5A;--bronze-d:#9a7248;--text:#172B3A;--text2:#5F6D78;--line:#dfe6ec;--w:1200px}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{font-family:Inter,system-ui,sans-serif;color:var(--text);background:#fff;line-height:1.6;overflow-x:hidden}
+body.lock{overflow:hidden}
+h1,h2,h3,h4{font-family:Montserrat,system-ui,sans-serif;line-height:1.15;color:var(--navy)}
+img,svg{max-width:100%;display:block}
+img{height:auto}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--bronze);outline-offset:2px}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 24px}
+.sr{position:absolute;left:-9999px}.skip:focus{left:8px;top:8px;background:#fff;padding:8px 16px;z-index:300}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 28px;font:600 13px Montserrat,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;border:2px solid transparent;border-radius:4px;cursor:pointer;transition:.2s;text-align:center}
+.btn-p{background:var(--bronze);color:#fff}.btn-p:hover{background:var(--bronze-d)}
+.btn-o{border-color:var(--navy);color:var(--navy);background:transparent}.btn-o:hover{background:var(--navy);color:#fff}
+.btn-w{border-color:#fff;color:#fff}.btn-w:hover{background:#fff;color:var(--navy)}
+.btn-sm{min-height:40px;padding:0 16px;font-size:12px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.ico{width:20px;height:20px;flex:none}
+/* header */
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.topbar{background:var(--navy);color:#cfd9e1;font-size:13px}
+.topbar .wrap{display:flex;justify-content:space-between;gap:16px;min-height:36px;align-items:center}
+.topbar b{color:#fff;font-weight:600}
+.hbar{display:flex;align-items:center;justify-content:space-between;height:80px;gap:24px}
+.logo{display:block;width:230px;flex:none}.logo img{width:100%;height:auto}
+nav ul{list-style:none;padding:0;display:flex;gap:4px;align-items:center}
+nav a,nav button.dd{font:600 13px Montserrat,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);padding:12px 14px;background:none;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px;border-bottom:2px solid transparent}
+nav a:hover,nav button.dd:hover,nav a.on{border-bottom-color:var(--bronze)}
+.has-dd{position:relative}
+.menu{position:absolute;top:100%;left:0;background:#fff;min-width:270px;border:1px solid var(--line);box-shadow:0 16px 40px rgba(11,38,61,.14);padding:8px;display:none;flex-direction:column}
+.has-dd.open .menu{display:flex}
+.menu a{text-transform:none;letter-spacing:0;font:500 15px Inter,system-ui,sans-serif;border:0;padding:10px 12px;width:100%;display:flex;justify-content:space-between}
+.menu a:hover{background:var(--gray)}
+.hright{display:flex;gap:12px;align-items:center}
+.lang{font:600 12px Montserrat,system-ui,sans-serif;color:var(--text2);display:flex;align-items:center;gap:6px}
+.lang img{width:22px;height:22px;object-fit:contain}
+.iconbtn{position:relative;width:48px;height:48px;border:1px solid var(--line);background:#fff;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--navy);transition:.2s}
+.iconbtn:hover{border-color:var(--navy)}
+.badge{position:absolute;top:-8px;right:-8px;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--bronze);color:#fff;font:700 12px Montserrat,system-ui,sans-serif;display:none;align-items:center;justify-content:center}
+.badge.on{display:flex}
+.badge.pop{animation:pop .35s}
+@keyframes pop{50%{transform:scale(1.4)}}
+.burger{display:none}
+.burger span,.burger span:before,.burger span:after{display:block;width:22px;height:2px;background:var(--navy);position:relative;transition:.2s}
+.burger span:before,.burger span:after{content:"";position:absolute;left:0}
+.burger span:before{top:-7px}.burger span:after{top:7px}
+.burger[aria-expanded=true] span{background:transparent}
+.burger[aria-expanded=true] span:before{top:0;transform:rotate(45deg)}
+.burger[aria-expanded=true] span:after{top:0;transform:rotate(-45deg)}
+/* hero */
+.hero{background:linear-gradient(100deg,#fff 0,#fff 38%,var(--gray) 100%);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center;min-height:560px}
+.eyebrow{font:600 12px Montserrat,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.eyebrow:before{content:"";width:32px;height:2px;background:var(--bronze)}
+.hero h1{font-size:clamp(40px,5.6vw,72px);font-weight:800;letter-spacing:-.01em}
+.hero p.sub{font:500 clamp(16px,2vw,22px) Montserrat,system-ui,sans-serif;letter-spacing:.04em;color:var(--steel);margin:16px 0 36px;text-transform:uppercase}
+.hero .acts{display:flex;gap:12px;flex-wrap:wrap}
+.hero{position:relative;background:#e9eef2}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.94) 0,rgba(255,255,255,.82) 30%,rgba(255,255,255,.35) 48%,rgba(255,255,255,0) 62%);pointer-events:none}
+.hero .wrap{position:relative;z-index:2}
+.heroimg{position:absolute;inset:0;z-index:0;display:block}
+.heroimg img,.heroimg svg,.heroimg>div{width:100%;height:100%;object-fit:cover;object-position:100% 50%}
+.strip{border-bottom:1px solid var(--line)}
+.strip .wrap{display:grid;grid-template-columns:repeat(3,1fr)}
+.strip .wrap>div{padding:24px 24px 24px 0;font-size:14px;color:var(--text2)}
+.strip .wrap>div+div{padding-left:24px;border-left:1px solid var(--line)}
+.strip b{display:block;font:700 15px Montserrat,system-ui,sans-serif;color:var(--navy);margin-bottom:2px}
+/* sections */
+section{padding:96px 0}
+.sh{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:40px;flex-wrap:wrap}
+.sh h2{font-size:clamp(28px,3.4vw,40px);font-weight:700}
+.sh h2:after{content:"";display:block;width:48px;height:3px;background:var(--bronze);margin-top:14px}
+.link{font:600 13px Montserrat,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);border-bottom:2px solid var(--bronze);padding-bottom:2px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.card{display:flex;flex-direction:column;border:1px solid var(--line);background:#fff;transition:.2s;text-align:left;cursor:pointer;font:inherit;padding:0}
+.card:hover{border-color:var(--steel);box-shadow:0 14px 30px rgba(11,38,61,.1);transform:translateY(-2px)}
+.im{position:relative;aspect-ratio:4/3;background:#fff;border-bottom:1px solid var(--line);width:100%;flex:none;overflow:hidden}
+.im img,.im>svg{position:absolute;inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);object-fit:contain;transition:transform .3s}
+.card:hover .im img,.pc:hover .im img{transform:scale(1.04)}
+.card .tx{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:8px;font:600 14px Montserrat,system-ui,sans-serif;letter-spacing:.03em;text-transform:uppercase;color:var(--navy);margin-top:auto}
+.card .tx i{font-style:normal;color:var(--bronze);font-size:20px}
+.card .cnt{display:block;font:500 12px Inter,system-ui,sans-serif;color:var(--text2);text-transform:none;letter-spacing:0}
+.card.span2{grid-column:span 2;background:var(--navy);border-color:var(--navy);flex-direction:row;align-items:center}
+.card.span2 .im{width:96px;height:96px;margin:16px;border:0;border-radius:4px}
+.card.span2 .tx{flex:1;color:#fff}.card.span2 .tx i{color:var(--bronze)}
+.card.span2 .tx small{display:block;color:#b9c8d3;font:400 13px Inter,system-ui,sans-serif;text-transform:none;letter-spacing:0;margin-top:2px}
+/* about */
+.about{background:var(--navy);color:#fff}
+.about .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.about h2{color:#fff;font-size:clamp(28px,3.4vw,40px);margin-bottom:20px}
+.about p{color:#cfd9e1;margin-bottom:28px;max-width:520px}
+.aboutimg{aspect-ratio:16/10;width:100%;object-fit:cover;object-position:50% 40%;margin-bottom:24px;border-radius:2px}
+.facts{border-top:1px solid rgba(255,255,255,.15)}
+.facts div{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:20px;align-items:baseline}
+.facts b{font:700 26px Montserrat,system-ui,sans-serif;color:var(--bronze);min-width:110px}
+.facts span{color:#cfd9e1}
+.q{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.q article{padding:32px 32px 0 0}.q article+article{padding-left:32px;border-left:1px solid var(--line)}
+.q small{font:700 12px Montserrat,system-ui,sans-serif;letter-spacing:.2em;color:var(--bronze)}
+.q h3{font-size:20px;margin:12px 0}.q p{color:var(--text2)}
+.cta{background:var(--gray);padding:72px 0}
+.cta .wrap{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
+.cta h2{font-size:clamp(26px,3vw,36px);max-width:620px}.cta p{color:var(--text2);margin-top:8px}
+footer{background:var(--navy);color:#cfd9e1;padding:64px 0 24px;font-size:15px}
+.fg{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px}
+footer h4{color:#fff;font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px}
+footer ul{list-style:none;padding:0;display:grid;gap:8px}
+footer a:hover{color:#fff;text-decoration:underline}
+.fb{border-top:1px solid rgba(255,255,255,.15);margin-top:40px;padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px}
+/* catalogue */
+.banner{background:linear-gradient(100deg,var(--navy) 35%,rgba(11,38,61,.55) 70%,rgba(11,38,61,.1)),url(images/hero-header.jpg) 100% 50%/cover #0B263D;color:#fff;padding:64px 0}
+.banner h1{color:#fff;font-size:clamp(34px,5vw,54px);font-weight:800;margin:8px 0 12px}
+.banner p{max-width:520px;color:#dbe5ec}
+.crumb{font:500 14px Inter,system-ui,sans-serif;color:var(--text2);padding:20px 0}
+.crumb a{font:500 14px Inter,system-ui,sans-serif;text-transform:none;letter-spacing:0;padding:0;border:0;display:inline}.crumb a:hover{text-decoration:underline}
+.cat{display:grid;grid-template-columns:270px 1fr;gap:40px;padding-bottom:96px}
+.filters{border:1px solid var(--line);padding:24px;align-self:start;position:sticky;top:116px}
+.filters h3{font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 8px}
+.filters .grp+.grp{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+.filters label{display:flex;gap:12px;align-items:center;padding:6px 0;cursor:pointer;min-height:40px;font-size:15px}
+.filters label em{margin-left:auto;font-style:normal;color:var(--text2);font-size:13px}
+.filters input{width:20px;height:20px;flex:none;accent-color:var(--navy)}
+.tools{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.tools .l{display:flex;gap:12px;align-items:center;flex:1;min-width:240px}
+input.f,select.f,.form input,.form select,.form textarea{font:500 15px Inter,system-ui,sans-serif;min-height:48px;padding:0 14px;border:1px solid #c5d0d9;border-radius:4px;background:#fff;color:var(--text);width:100%}
+.tools input.f{max-width:320px}.tools select.f{width:auto}
+.fbtn{display:none}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{background:var(--gray);border:0;border-radius:20px;padding:6px 14px;font:500 13px Inter,system-ui,sans-serif;cursor:pointer;color:var(--navy)}
+.chip:after{content:" ×"}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pc{border:1px solid var(--line);display:flex;flex-direction:column;background:#fff;transition:.2s;position:relative}
+.pc:hover{border-color:var(--steel);box-shadow:0 14px 30px rgba(11,38,61,.1)}
+.pc .open{all:unset;cursor:pointer;display:block}
+.pc .tag{position:absolute;top:12px;left:12px;z-index:2;background:var(--navy);color:#fff;font:600 11px Montserrat,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:2px}
+.pc .qv{position:absolute;left:0;right:0;bottom:0;z-index:2;background:rgba(11,38,61,.92);color:#fff;text-align:center;font:600 12px Montserrat,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:10px;transform:translateY(100%);transition:.25s}
+.pc:hover .qv,.pc .open:focus-visible .qv{transform:none}
+.pc .tx{padding:18px 20px 20px;display:grid;gap:6px;flex:1;align-content:start}
+.pc .cl{font:600 11px Montserrat,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--steel)}
+.pc h3{font-size:17px}
+.pc p{color:var(--text2);font-size:14px}
+.pc .row{display:grid;grid-template-columns:1fr 48px;gap:8px;margin-top:auto;padding-top:12px}
+.pc .row .btn{min-height:44px;padding:0 12px}
+.pc .add{border:2px solid var(--navy);background:#fff;border-radius:4px;cursor:pointer;color:var(--navy);display:flex;align-items:center;justify-content:center;transition:.2s}
+.pc .add:hover{background:var(--navy);color:#fff}
+.pc.quote{background:var(--navy);border-color:var(--navy);justify-content:center}
+.pc.quote .tx{align-content:center;flex:1}.pc.quote h3{color:#fff}.pc.quote p{color:#cfd9e1}
+.pc.quote .btn{background:transparent;border-color:#fff;color:#fff}.pc.quote .btn:hover{background:#fff;color:var(--navy)}
+.empty{grid-column:1/-1;padding:48px;text-align:center;color:var(--text2);border:1px dashed #c5d0d9}
+/* overlays */
+.ov{position:fixed;inset:0;background:rgba(11,38,61,.68);display:none;z-index:120;align-items:center;justify-content:center;padding:24px}
+.ov.open{display:flex}
+.box{background:#fff;width:100%;border-radius:4px;position:relative;max-height:94vh;overflow:auto}
+.x{position:absolute;right:10px;top:10px;width:44px;height:44px;border:0;background:#fff;font-size:26px;cursor:pointer;color:var(--navy);z-index:5;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+/* product modal */
+#pm .box{max-width:1080px}
+.pd{display:grid;grid-template-columns:1.05fr 1fr}
+.gal{background:#fff;border-right:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:12px}
+.gimg{position:relative;aspect-ratio:1/1;background:#fff;border:1px solid var(--line);overflow:hidden;cursor:zoom-in}
+.gimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:18px;transition:transform .2s}
+.gimg.z{cursor:zoom-out}.gimg.z img{transform:scale(2)}
+.gal small{color:var(--text2);font-size:12px}
+.info{padding:32px 32px 28px;display:flex;flex-direction:column;gap:16px}
+.info .cl{font:600 12px Montserrat,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
+.info h2{font-size:clamp(24px,3vw,32px)}
+.info .lead{color:var(--text2)}
+.spec{width:100%;border-collapse:collapse;font-size:14px}
+.spec th,.spec td{padding:10px 0;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.spec th{width:42%;font-weight:500;color:var(--text2)}
+.spec td{font-weight:600;color:var(--navy)}
+.spec td.na{font-weight:500;color:var(--bronze-d)}
+.buy{display:flex;gap:12px;flex-wrap:wrap;align-items:stretch}
+.qty{display:inline-flex;border:1px solid #c5d0d9;border-radius:4px;height:48px}
+.qty button{width:44px;border:0;background:none;font-size:20px;cursor:pointer;color:var(--navy)}
+.qty button:hover{background:var(--gray)}
+.qty output{min-width:40px;display:flex;align-items:center;justify-content:center;font-weight:600}
+.buy .btn-p{flex:1;min-width:180px}
+.ticks{list-style:none;padding:0;display:grid;gap:6px;font-size:14px;color:var(--text2)}
+.ticks li:before{content:"✓";color:var(--bronze);font-weight:700;margin-right:10px}
+details{border-top:1px solid var(--line);padding:12px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font:600 14px Montserrat,system-ui,sans-serif;color:var(--navy);list-style:none;display:flex;justify-content:space-between}
+summary:after{content:"+";color:var(--bronze);font-size:20px;line-height:1}
+details[open] summary:after{content:"–"}
+details p,details ol{margin-top:10px;font-size:14px;color:var(--text2)}
+details ol{padding-left:20px}
+.rel{padding:28px 32px 32px;border-top:1px solid var(--line);background:#f7f9fb}
+.rel h3{font-size:16px;margin-bottom:16px}
+.relg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.relg .card .tx{font-size:12px;padding:12px}
+/* cart drawer */
+#cart{justify-content:flex-end;padding:0}
+#cart .box{max-width:460px;height:100vh;max-height:100vh;border-radius:0;display:flex;flex-direction:column;animation:slide .25s}
+@keyframes slide{from{transform:translateX(40px);opacity:0}}
+.ch{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.ch h2{font-size:20px}
+.ch .x{position:static;box-shadow:none}
+.cb{flex:1;overflow:auto;padding:8px 24px}
+.ci{display:grid;grid-template-columns:84px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.ci .t{width:84px;height:84px;border:1px solid var(--line);background:#fff;padding:6px}
+.ci .t img{width:100%;height:100%;object-fit:contain}
+.ci h4{font-size:14px;margin-bottom:2px}.ci small{color:var(--text2)}
+.ci .r{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.ci .qty{height:36px}.ci .qty button{width:34px}.ci .qty output{min-width:32px}
+.rm{background:none;border:0;color:var(--text2);text-decoration:underline;cursor:pointer;font-size:13px;min-height:36px}
+.cf{padding:20px 24px;border-top:1px solid var(--line);display:grid;gap:12px;background:#f7f9fb}
+.cf .sum{display:flex;justify-content:space-between;font-weight:600;color:var(--navy)}
+.cf small{color:var(--text2);font-size:12px}
+.cempty{text-align:center;padding:56px 12px;color:var(--text2)}
+.cempty svg{margin:0 auto 12px;color:var(--steel)}
+/* quote modal */
+#qm .box{max-width:560px;padding:32px}
+#qm h2{font-size:24px;margin-bottom:6px}
+.form{display:grid;gap:16px;margin-top:20px}
+.form label{font:600 13px Inter,system-ui,sans-serif;display:grid;gap:6px}
+.form textarea{padding:12px 14px;min-height:130px;resize:vertical}
+.err{color:#b3261e;font-size:13px;font-weight:500}
+.form .bad{border-color:#b3261e}
+.note{font-size:13px;color:var(--text2);background:var(--gray);padding:10px 12px;border-radius:4px}
+.ok{background:#e6f4ea;color:#1e5b2f;padding:16px;border-radius:4px;font-weight:500}
+.view{display:none}.view.on{display:block}
+.drawerbg{display:none}
+/* toast */
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,40px);background:var(--navy);color:#fff;padding:14px 20px;border-radius:4px;z-index:400;opacity:0;pointer-events:none;transition:.3s;display:flex;gap:16px;align-items:center;font-size:14px;max-width:calc(100vw - 32px);box-shadow:0 12px 32px rgba(0,0,0,.25)}
+#toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#toast button{background:none;border:0;color:var(--bronze);font-weight:700;cursor:pointer;text-decoration:underline;font-size:14px;min-height:32px}
+/* responsive */
+@media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}.pgrid{grid-template-columns:repeat(2,1fr)}.fg{grid-template-columns:1fr 1fr}.relg{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){
+ .topbar{display:none}
+ .burger{display:inline-flex}
+ .hright .btn,.hright .lang{display:none}
+ nav{position:absolute;top:80px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);display:none;padding:8px 24px 24px;max-height:calc(100vh - 80px);overflow:auto}
+ nav.open{display:block}
+ nav ul{flex-direction:column;align-items:stretch;gap:0}
+ nav a,nav button.dd{width:100%;min-height:52px;border-bottom:1px solid var(--line);justify-content:space-between}
+ .menu{position:static;box-shadow:none;border:0;padding:0 0 0 12px;min-width:0}
+ nav .mob{display:block;margin-top:16px}
+ .hero .wrap{grid-template-columns:1fr;min-height:0;padding-top:28px;gap:24px}
+ .hero:after{display:none}
+ .heroimg{position:relative;inset:auto;margin:0;aspect-ratio:3/2}
+ .heroimg img{object-position:88% 50%}
+ .hero .wrap>div:first-child{padding-bottom:40px}
+ .strip .wrap{grid-template-columns:1fr}.strip .wrap>div,.strip .wrap>div+div{padding:14px 0;border-left:0;border-bottom:1px solid var(--line)}
+ section{padding:64px 0}
+ .about .wrap,.q{grid-template-columns:1fr}
+ .q article,.q article+article{padding:24px 0;border-left:0;border-bottom:1px solid var(--line)}
+ .cat{grid-template-columns:1fr}
+ .fbtn{display:inline-flex}
+ .filters{display:none;position:fixed;inset:auto 0 0 0;z-index:130;top:auto;max-height:82vh;overflow:auto;background:#fff;border-radius:12px 12px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.3)}
+ .filters.open{display:block}
+ .drawerbg.open{display:block;position:fixed;inset:0;background:rgba(11,38,61,.6);z-index:125}
+ .ov{padding:0;align-items:flex-end}
+ #pm .box{max-height:96vh;border-radius:12px 12px 0 0}
+ .pd{grid-template-columns:1fr}
+ .gal{border-right:0;padding:16px}
+ .info{padding:20px 20px 24px}
+ .rel{padding:24px 20px}
+ .ov #qm .box,#qm .box{border-radius:12px 12px 0 0;padding:24px 20px}
+}
+@media(min-width:901px){nav .mob{display:none}}
+@media(max-width:600px){
+ .wrap{padding:0 20px}
+ .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+ .card .tx{padding:12px;font-size:12px}
+ .pgrid{grid-template-columns:1fr}
+ .fg{grid-template-columns:1fr}
+ .tools .l{min-width:100%}.tools input.f{max-width:none}
+ .logo{width:180px}
+ .hero .acts .btn,.cta .btn{width:100%}
+ .relg{grid-template-columns:repeat(2,1fr)}
+ .buy .qty{width:100%}.buy .qty output{flex:1}
+ #cart .box{max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="sr skip" href="#main">Przejdź do treści</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="aframe" viewBox="0 0 48 64"><path d="M24 4 6 60M24 4l18 56M13 38h22M18 22h12M9 50h30" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="4" r="3" fill="#B58B5A"/></symbol>
+ <symbol id="logo" viewBox="0 0 420 96">
+  <ellipse cx="170" cy="56" rx="165" ry="34" fill="none" stroke="currentColor" stroke-width="3" transform="rotate(-6 170 56)"/>
+  <text x="30" y="62" font-family="Montserrat,sans-serif" font-weight="800" font-style="italic" font-size="52" fill="currentColor" letter-spacing="-1.5">Stachurski</text>
+  <text x="228" y="86" font-family="Montserrat,sans-serif" font-weight="600" font-size="11" letter-spacing="4" fill="currentColor">EST. 1974</text>
+  <g transform="translate(350 6) scale(1.15)" color="currentColor"><use href="#aframe" width="48" height="64"/></g>
+ </symbol>
+ <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2.5l2.2 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L20 8H6.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="19" r="1.5" fill="currentColor"/><circle cx="16.5" cy="19" r="1.5" fill="currentColor"/></symbol>
+ <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<header>
+ <div class="topbar"><div class="wrap"><span><b>Producent</b> stojaków do transportu szyb i okien</span><span>Wycena indywidualna — bez cen katalogowych</span></div></div>
+ <div class="wrap hbar">
+  <a class="logo" href="#home" aria-label="Stachurski — strona główna"><img src="images/logo-navy.png" alt="Stachurski EST. 1974" width="1400" height="311" fetchpriority="high"></a>
+  <nav id="nav" aria-label="Główna nawigacja">
+   <ul>
+    <li><a href="#home">Start</a></li>
+    <li><a href="#o-firmie">O firmie</a></li>
+    <li class="has-dd"><button class="dd" aria-expanded="false" aria-haspopup="true">Oferta <span aria-hidden="true">▾</span></button>
+     <div class="menu" id="ddmenu"></div></li>
+    <li><a href="#jakosc">Realizacje</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+    <li class="mob"><button class="btn btn-p" data-quote style="width:100%">Zapytaj o ofertę</button></li>
+   </ul>
+  </nav>
+  <div class="hright">
+   <span class="lang"><img src="images/flag-pl.png" alt="" width="22" height="22">PL</span>
+   <button class="btn btn-p btn-sm" data-quote>Zapytaj o ofertę</button>
+   <button class="iconbtn" id="cartbtn" aria-label="Lista zapytania"><svg class="ico" style="width:24px;height:24px"><use href="#i-cart"/></svg><span class="badge" id="badge">0</span></button>
+   <button class="iconbtn burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span></button>
+  </div>
+ </div>
+</header>
+
+<main id="main">
+<!-- HOME -->
+<div class="view on" id="v-home">
+ <div class="hero">
+  <div class="heroimg"><img src="images/Robotic Industrial Rack Showcase.png" alt="Robot spawalniczy i stojaki transportowe do szyb Stachurski" width="2170" height="725" fetchpriority="high" data-fb="hero"></div>
+  <div class="wrap">
+  <div>
+   <div class="eyebrow">Solidne rozwiązania dla Twojej branży</div>
+   <h1>Producent stojaków</h1>
+   <p class="sub">do transportu szyb i okien</p>
+   <div class="acts"><a class="btn btn-p" href="#oferta">Zobacz ofertę →</a><button class="btn btn-o" data-quote>Zapytaj o wycenę</button></div>
+  </div>
+ </div></div>
+ <div class="strip"><div class="wrap">
+  <div><b>Od 1974 roku</b>Polski producent</div>
+  <div><b>Własna produkcja</b>Stojaki, wózki, palety i wyposażenie</div>
+  <div><b>Wycena na zapytanie</b>Dodaj produkty do listy i wyślij jedno zapytanie</div>
+ </div></div>
+
+ <section id="kategorie"><div class="wrap">
+  <div class="sh"><h2>Nasza oferta</h2><a class="link" href="#oferta">Zobacz wszystkie produkty</a></div>
+  <div class="grid" id="catgrid"></div>
+ </div></section>
+
+ <section style="background:#f7f9fb;padding:80px 0"><div class="wrap">
+  <div class="sh"><h2>Wybrane stojaki</h2><a class="link" href="#oferta/stojaki">Wszystkie stojaki</a></div>
+  <div class="pgrid" id="featured"></div>
+ </div></section>
+
+ <section class="about" id="o-firmie"><div class="wrap">
+  <div>
+   <h2>O firmie</h2>
+   <p>Stachurski to polski producent stojaków i wyposażenia do transportu i magazynowania szyb oraz okien. Konstrukcje powstają we własnej produkcji i są dopasowywane do potrzeb klientów.</p>
+   <a class="btn btn-w" href="https://www.stachurski.com.pl/" target="_blank" rel="noopener">Poznaj naszą historię →</a>
+  </div>
+  <div>
+   <img class="aboutimg" src="images/o-firmie-spawanie.jpg" alt="Spawanie konstrukcji stalowej w produkcji Stachurski" width="617" height="619" loading="lazy" data-fb="1">
+   <div class="facts">
+    <div><b>1974</b><span>Rok założenia firmy</span></div>
+    <div><b>Polska</b><span>Własna produkcja</span></div>
+    <div><b>Szkło</b><span>Transport i magazynowanie szyb oraz okien</span></div>
+   </div>
+  </div>
+ </div></section>
+
+ <section id="jakosc"><div class="wrap">
+  <div class="sh"><h2>Produkcja i jakość</h2></div>
+  <div class="q">
+   <article><small>01</small><h3>Własna produkcja</h3><p>Stojaki, wózki i wyposażenie wytwarzane przez producenta.</p></article>
+   <article><small>02</small><h3>Wytrzymała konstrukcja</h3><p>Stalowe konstrukcje projektowane do pracy w przemyśle.</p></article>
+   <article><small>03</small><h3>Rozwiązania na zamówienie</h3><p>Możliwość dopasowania produktu do potrzeb — zapytaj o szczegóły.</p></article>
+  </div>
+ </div></section>
+</div>
+
+<!-- CATALOGUE -->
+<div class="view" id="v-oferta">
+ <div class="banner"><div class="wrap"><div class="eyebrow" style="color:#b9c8d3">Oferta</div><h1 id="ctitle">Wszystkie produkty</h1><p id="cdesc">Stojaki, wózki, palety i wyposażenie do transportu szyb i okien.</p></div></div>
+ <div class="wrap">
+  <nav class="crumb" aria-label="Okruszki"><a href="#home">Start</a> / <a href="#oferta">Oferta</a><span id="ccrumb"></span></nav>
+  <div class="cat">
+   <aside class="filters" id="filters" aria-label="Filtry">
+    <div class="grp"><h3>Kategoria</h3><div id="catfilters"></div></div>
+    <div class="grp"><h3>Typ stojaka</h3><div id="typefilters"></div></div>
+    <button class="btn btn-o btn-sm" id="clear" style="width:100%;margin-top:20px">Wyczyść filtry</button>
+    <button class="btn btn-p btn-sm fbtn" id="applyf" style="width:100%;margin-top:8px">Pokaż wyniki</button>
+   </aside>
+   <div>
+    <div class="tools">
+     <div class="l"><button class="btn btn-o btn-sm fbtn" id="openf">Filtry</button><input class="f" type="search" id="q" placeholder="Szukaj produktu…" aria-label="Szukaj"></div>
+     <label style="font-size:14px;color:var(--text2)">Sortuj: <select class="f" id="sort"><option value="def">Domyślnie</option><option value="az">Nazwa A–Z</option><option value="za">Nazwa Z–A</option></select></label>
+    </div>
+    <div class="chips" id="chips"></div>
+    <p id="count" style="color:var(--text2);margin-bottom:16px" aria-live="polite"></p>
+    <div class="pgrid" id="pgrid"></div>
+   </div>
+  </div>
+ </div>
+</div>
+</main>
+<div class="drawerbg" id="dbg"></div>
+
+<!-- <section class="cta" id="kontakt"><div class="wrap">
+ <div> <img src=""><h2>Potrzebujesz wyceny produktu?</h2><p>Dodaj produkty do listy zapytania i wyślij je jednym formularzem.</p> </div>
+ <button class="btn btn-p" data-quote>Zapytaj o ofertę →</button>
+</div></section> -->
+
+<section class="cta" id="kontakt">
+  <style>
+    .cta {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: 64px 0;
+      background-color: #e9eef2;
+      background-image:
+        linear-gradient(
+          90deg,
+          rgba(233, 238, 242, 0.98) 0%,
+          rgba(233, 238, 242, 0.94) 42%,
+          rgba(233, 238, 242, 0.72) 68%,
+          rgba(233, 238, 242, 0.45) 100%
+        ),
+        url("https://i.ibb.co.com/1GcDfmGX/Modern-Industrial-Glass-Storage-Rack.png");
+      background-position: center, right center;
+      background-size: cover, cover;
+      background-repeat: no-repeat;
+    }
+
+    .cta .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(100% - 48px, 1720px);
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .cta .cta-content {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .cta h2 {
+      margin: 0 0 12px;
+      color: #0b263d;
+      font-size: clamp(28px, 3vw, 52px);
+      line-height: 1.15;
+      font-weight: 750;
+      letter-spacing: -0.025em;
+      overflow-wrap: break-word;
+    }
+
+    .cta p {
+      margin: 0;
+      color: #54758d;
+      font-size: clamp(16px, 1.35vw, 24px);
+      line-height: 1.6;
+    }
+
+    .cta .btn.btn-p {
+      flex: 0 0 auto;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      min-height: 60px;
+      padding: 16px 28px;
+      border: 1px solid #b58b5a;
+      border-radius: 5px;
+      background: #b58b5a;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.3;
+      text-align: center;
+      white-space: normal;
+      cursor: pointer;
+      transition: background-color 0.2s ease,
+                  border-color 0.2s ease,
+                  transform 0.2s ease;
+    }
+
+    .cta .btn.btn-p:hover {
+      background: #986f42;
+      border-color: #986f42;
+    }
+
+    .cta .btn.btn-p:focus-visible {
+      outline: 3px solid #0b263d;
+      outline-offset: 4px;
+    }
+
+    /* Tablet */
+    @media (max-width: 900px) {
+      .cta {
+        padding: 48px 0;
+        background-position: center, 65% center;
+      }
+
+      .cta .wrap {
+        gap: 24px;
+      }
+
+      .cta .btn.btn-p {
+        max-width: 240px;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .cta {
+        padding: 38px 0;
+        background-image:
+          linear-gradient(
+            90deg,
+            rgba(233, 238, 242, 0.96),
+            rgba(233, 238, 242, 0.88)
+          ),
+          url("https://i.ibb.co.com/1GcDfmGX/Modern-Industrial-Glass-Storage-Rack.png");
+        background-position: center, 68% center;
+        background-size: cover, cover;
+      }
+
+      .cta .wrap {
+        width: calc(100% - 36px);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px;
+      }
+
+      .cta h2 {
+        font-size: clamp(26px, 7vw, 34px);
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+
+      .cta p {
+        font-size: 15px;
+        line-height: 1.65;
+        max-width: 100%;
+      }
+
+      .cta .btn.btn-p {
+        width: 100%;
+        max-width: 100%;
+        min-height: 54px;
+        padding: 14px 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cta .btn.btn-p {
+        transition: none;
+      }
+    }
+  </style>
+
+  <div class="wrap">
+    <div class="cta-content">
+      <h2>Potrzebujesz wyceny produktu?</h2>
+      <p>
+        Dodaj produkty do listy zapytania i wyślij je jednym formularzem.
+      </p>
+    </div>
+
+    <button class="btn btn-p" type="button" data-quote>
+      Zapytaj o ofertę <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</section>
+
+
+<footer><div class="wrap">
+ <div class="fg">
+  <div><a href="#home" style="display:block;width:240px;max-width:100%;margin-bottom:20px" aria-label="Stachurski — strona główna"><img src="images/logo-white.png" alt="Stachurski EST. 1974" width="1400" height="311" loading="lazy"></a><p>Producent stojaków do transportu szyb i okien. Od 1974.</p></div>
+  <div><h4>Nawigacja</h4><ul><li><a href="#home">Start</a></li><li><a href="#o-firmie">O firmie</a></li><li><a href="#oferta">Oferta</a></li><li><a href="#jakosc">Realizacje</a></li><li><a href="#kontakt">Kontakt</a></li></ul></div>
+  <div><h4>Produkty</h4><ul id="fcats"></ul></div>
+  <div><h4>Kontakt</h4><ul><li><a href="https://www.stachurski.com.pl/" target="_blank" rel="noopener">Dane kontaktowe na stronie oficjalnej</a></li><li><button class="btn btn-p btn-sm" data-quote>Zapytaj o ofertę</button></li></ul></div>
+ </div>
+ <div class="fb"><span>© <span id="yr"></span> Stachurski. Wszelkie prawa zastrzeżone.</span><span>Polityka prywatności · Regulamin</span></div>
+</div>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="ov" id="pm" role="dialog" aria-modal="true" aria-labelledby="pmt"><div class="box" id="pmbox"></div></div>
+
+<!-- CART -->
+<div class="ov" id="cart" role="dialog" aria-modal="true" aria-labelledby="ct">
+ <div class="box">
+  <div class="ch"><h2 id="ct">Lista zapytania</h2><button class="x" data-close aria-label="Zamknij">×</button></div>
+  <div class="cb" id="cbody"></div>
+  <div class="cf" id="cfoot"></div>
+ </div>
+</div>
+
+<!-- QUOTE -->
+<div class="ov" id="qm" role="dialog" aria-modal="true" aria-labelledby="qt">
+ <div class="box">
+  <button class="x" data-close aria-label="Zamknij">×</button>
+  <h2 id="qt">Zapytaj o ofertę</h2>
+  <p style="color:var(--text2)">Wypełnij formularz, a skontaktujemy się z Tobą.</p>
+  <form class="form" id="form" novalidate>
+   <label>Imię i nazwisko<input name="name" autocomplete="name" required><span class="err"></span></label>
+   <label>E-mail<input name="email" type="email" autocomplete="email" required><span class="err"></span></label>
+   <label>Telefon (opcjonalnie)<input name="phone" type="tel" autocomplete="tel"></label>
+   <label>Wiadomość i lista produktów<textarea name="msg" required></textarea><span class="err"></span></label>
+   <button class="btn btn-p" type="submit">Wyślij zapytanie</button>
+   <div id="res" role="status"></div>
+  </form>
+ </div>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+/* Formularz: wpisz endpoint (np. Formspree "https://formspree.io/f/XXXX"), aby wysyłka działała naprawdę. Pusty = tryb demo. */
+const FORM_ENDPOINT="";
+
+const CATS=[
+ {id:"stojaki",n:"Stojaki",d:"Solidne konstrukcje do bezpiecznego transportu szyb i okien."},
+ {id:"wozki",n:"Wózki",d:"Wózki transportowe do przemieszczania elementów w hali."},
+ {id:"nawijarki",n:"Nawijarki do pasów transportowych",d:"Urządzenia do nawijania pasów transportowych."},
+ {id:"palety",n:"Palety",d:"Stalowe palety do składowania i transportu."},
+ {id:"stoly",n:"Stoły",d:"Stoły robocze na kółkach."},
+ {id:"regaly",n:"Regały",d:"Regały do magazynowania."},
+ {id:"podajniki",n:"Podajniki",d:"Wyposażenie do podawania i transportu elementów."},
+ {id:"akcesoria",n:"Akcesoria",d:"Akcesoria i elementy wyposażenia."},
+ {id:"inne",n:"Inne",d:"Pozostałe wyposażenie transportowe."}
+];
+const NA="Na zapytanie";
+/* UWAGA: opisy robocze — zatwierdź z klientem. Nie podajemy wymiarów, nośności ani cen, których nie zweryfikowano. */
+const P=[
+ {id:"stojak-a-1",c:"stojaki",t:"Typ A",n:"Stojak typu A — wariant 1",img:"stojaki.jpg",d:"Stojak transportowy w układzie A do bezpiecznego przewożenia i magazynowania szyb oraz okien. Elementy opierane są po obu stronach konstrukcji."},
+ {id:"stojak-a-2",c:"stojaki",t:"Typ A",n:"Stojak typu A — wariant 2",img:"stojak-typ-a-2.jpg",d:"Stojak w układzie A z podstawą na ramie nośnej, przeznaczony do transportu i składowania szyb oraz okien."},
+ {id:"stojak-a-3",c:"stojaki",t:"Typ A",n:"Stojak typu A — wariant 3",img:"stojak-typ-a-3.jpg",d:"Stojak w układzie A do transportu i składowania szyb oraz okien, ze wzmocnioną podstawą."},
+ {id:"stojak-l-1",c:"stojaki",t:"Typ L",n:"Stojak typu L — wariant 1",img:"stojak-typ-l-1.jpg",d:"Stojak w układzie L do jednostronnego opierania szyb i okien podczas transportu oraz magazynowania."},
+ {id:"stojak-l-2",c:"stojaki",t:"Typ L",n:"Stojak typu L — wariant 2",img:"stojak-typ-l-2.jpg",d:"Stojak w układzie L z ocynkowaną ramą, do transportu i składowania szyb oraz okien."},
+ {id:"wozek",c:"wozki",n:"Wózek transportowy z ramionami",img:"wozki.jpg",d:"Wózek na kółkach skrętnych z ramionami do ustawiania elementów. Ułatwia przemieszczanie materiału w hali."},
+ {id:"nawijarka",c:"nawijarki",n:"Nawijarka do pasów transportowych",img:"nawijarki.jpg",d:"Urządzenie z panelem sterowania do nawijania pasów transportowych."},
+ {id:"paleta",c:"palety",n:"Paleta stalowa z drewnianym dnem",img:"palety.jpg",d:"Stalowa paleta z drewnianą podłogą, przeznaczona do składowania i transportu."},
+ {id:"stol",c:"stoly",n:"Stół transportowy na kółkach",img:"stoly.jpg",d:"Stół ze stalową ramą i kółkami, ułatwiający przemieszczanie elementów."},
+ {id:"regal",c:"regaly",n:"Regał z ramionami",img:"regaly.jpg",d:"Regał z ramionami do magazynowania elementów."},
+ {id:"podajnik",c:"podajniki",n:"Podajnik",img:"podajniki.jpg",d:"Konstrukcja podajnika do transportu i podawania elementów."},
+ {id:"kolo",c:"akcesoria",n:"Kółko transportowe",img:"akcesoria.jpg",d:"Kółko z kołem z tworzywa, element wyposażenia wózków i stojaków."},
+ {id:"platformy",c:"inne",n:"Platformy transportowe",img:"inne.jpg",d:"Dodatkowe wyposażenie transportowe. Zapytaj o szczegóły i możliwe warianty."}
+];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const cat=id=>CATS.find(c=>c.id===id),prod=id=>P.find(p=>p.id===id);
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+$("#yr").textContent=new Date().getFullYear();
+
+/* images + fallback */
+const img=(f,alt,lazy=true)=>`<img src="images/${f}" alt="${esc(alt)}" width="800" height="600" ${lazy?'loading="lazy"':''} data-fb="1">`;
+document.addEventListener("error",e=>{const i=e.target;if(i.tagName==="IMG"&&i.dataset.fb){const hero=i.dataset.fb==="hero";const d=document.createElement("div");d.style.cssText="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:"+(hero?"#fff;background:var(--navy);aspect-ratio:3/2":"#54758D");d.innerHTML='<svg viewBox="0 0 120 90" style="width:55%" role="img" aria-label="Zdjęcie produktu zostanie dodane"><g transform="translate(36 6) scale(.75)"><use href="#aframe" width="48" height="64"/></g></svg>';i.replaceWith(d)}},true);
+
+/* menus */
+$("#ddmenu").innerHTML='<a href="#oferta">Wszystkie produkty</a>'+CATS.map(c=>`<a href="#oferta/${c.id}">${c.n}</a>`).join("");
+$("#fcats").innerHTML=CATS.slice(0,5).map(c=>`<li><a href="#oferta/${c.id}">${c.n}</a></li>`).join("");
+const cnt=id=>P.filter(p=>p.c===id).length;
+$("#catgrid").innerHTML=CATS.map(c=>{const p=P.find(x=>x.c===c.id);return `<a class="card" href="#oferta/${c.id}"><div class="im">${img(p.img,c.n)}</div><div class="tx"><span>${c.n}<span class="cnt">${cnt(c.id)} ${cnt(c.id)===1?"produkt":"produktów"}</span></span><i aria-hidden="true">→</i></div></a>`}).join("")
+ +`<button class="card span2" data-open-cart><div class="im">${img("wycena-produktu.jpg","Kalkulator")}</div><div class="tx"><span>Wycena produktu<small>Zbierz produkty na liście zapytania</small></span><i aria-hidden="true">→</i></div></button>`;
+
+/* product card */
+function card(p){return `<article class="pc"><span class="tag">${p.t||cat(p.c).n.split(" ")[0]}</span>
+ <button class="open" data-open="${p.id}" aria-label="Zobacz szczegóły: ${esc(p.n)}"><div class="im">${img(p.img,p.n+" — Stachurski")}<span class="qv">Zobacz szczegóły</span></div></button>
+ <div class="tx"><span class="cl">${cat(p.c).n}</span><h3>${p.n}</h3><p>Wymiary i nośność: na zapytanie.</p>
+ <div class="row"><button class="btn btn-p btn-sm" data-open="${p.id}">Szczegóły</button><button class="add" data-add="${p.id}" aria-label="Dodaj do listy zapytania: ${esc(p.n)}" title="Dodaj do listy zapytania"><svg class="ico"><use href="#i-plus"/></svg></button></div></div></article>`}
+$("#featured").innerHTML=P.filter(p=>p.c==="stojaki").slice(0,3).map(card).join("");
+
+/* catalogue */
+let curCat="";
+const types=[...new Set(P.filter(p=>p.t).map(p=>p.t))];
+function buildFilters(){
+ $("#catfilters").innerHTML=`<label><input type="radio" name="kat" value="" ${!curCat?"checked":""}> Wszystkie <em>${P.length}</em></label>`+CATS.map(c=>`<label><input type="radio" name="kat" value="${c.id}" ${curCat===c.id?"checked":""}> ${c.n} <em>${cnt(c.id)}</em></label>`).join("");
+ $("#typefilters").innerHTML=types.map(t=>`<label><input type="checkbox" value="${t}"> ${t} <em>${P.filter(p=>p.t===t).length}</em></label>`).join("");
+ $$("#catfilters input").forEach(i=>i.onchange=()=>{curCat=i.value;location.hash=curCat?"#oferta/"+curCat:"#oferta"});
+ $$("#typefilters input").forEach(i=>i.onchange=render);
+}
+function render(){
+ const sel=$$("#typefilters input:checked").map(i=>i.value),q=$("#q").value.trim().toLowerCase();
+ let l=P.filter(p=>(!curCat||p.c===curCat)&&(!sel.length||sel.includes(p.t))&&(!q||(p.n+" "+cat(p.c).n).toLowerCase().includes(q)));
+ const s=$("#sort").value;if(s!=="def")l.sort((a,b)=>s==="az"?a.n.localeCompare(b.n,"pl"):b.n.localeCompare(a.n,"pl"));
+ $("#count").textContent=`Wyniki: ${l.length}`;
+ const chips=[];if(curCat)chips.push(`<button class="chip" data-chip="cat">${cat(curCat).n}</button>`);sel.forEach(t=>chips.push(`<button class="chip" data-chip="${t}">${t}</button>`));if(q)chips.push(`<button class="chip" data-chip="q">„${esc(q)}”</button>`);
+ $("#chips").innerHTML=chips.join("");
+ $("#pgrid").innerHTML=l.length?l.map(card).join("")+(!curCat||curCat==="stojaki"?'<article class="pc quote"><div class="tx"><h3>Potrzebujesz innego rozwiązania?</h3><p>Opisz wymiary i zastosowanie — przygotujemy wycenę.</p><button class="btn btn-sm" data-quote>Zapytaj o ofertę</button></div></article>':""):'<div class="empty">Brak produktów dla wybranych filtrów.<br><button class="btn btn-o btn-sm" data-clear style="margin-top:16px">Wyczyść filtry</button></div>';
+}
+$("#q").oninput=render;$("#sort").onchange=render;
+const clearAll=()=>{$$("#typefilters input").forEach(i=>i.checked=false);$("#q").value="";if(curCat)location.hash="#oferta";else render()};
+$("#clear").onclick=clearAll;
+$("#chips").onclick=e=>{const c=e.target.closest("[data-chip]");if(!c)return;const k=c.dataset.chip;if(k==="cat"){location.hash="#oferta"}else if(k==="q"){$("#q").value="";render()}else{const i=$(`#typefilters input[value="${k}"]`);i.checked=false;render()}};
+const df=o=>{$("#filters").classList.toggle("open",o);$("#dbg").classList.toggle("open",o)};
+$("#openf").onclick=()=>df(true);$("#applyf").onclick=()=>df(false);$("#dbg").onclick=()=>df(false);
+
+/* router */
+function route(){
+ const h=location.hash.slice(1);const [a,b]=h.split("/");
+ let v="home";
+ if(a==="oferta"||a==="stojaki"){v="oferta";curCat=a==="stojaki"?"stojaki":(b&&cat(b)?b:"")}
+ $$(".view").forEach(e=>e.classList.toggle("on",e.id==="v-"+v));
+ closeNav();df(false);
+ if(v==="oferta"){
+  const c=cat(curCat);$("#ctitle").textContent=c?c.n:"Wszystkie produkty";$("#cdesc").textContent=c?c.d:"Stojaki, wózki, palety i wyposażenie do transportu szyb i okien.";
+  $("#ccrumb").innerHTML=c?` / <span aria-current="page">${c.n}</span>`:"";
+  document.title=(c?c.n:"Oferta")+" — Stachurski";buildFilters();render();window.scrollTo(0,0);
+ }else{
+  document.title="Stachurski — Producent stojaków do transportu szyb i okien";
+  if(a&&a!=="home"&&document.getElementById(a)){setTimeout(()=>document.getElementById(a).scrollIntoView(),0)}else window.scrollTo(0,0);
+ }
+}
+addEventListener("hashchange",route);
+
+/* nav */
+const burger=$("#burger"),nav=$("#nav");
+function closeNav(){nav.classList.remove("open");burger.setAttribute("aria-expanded","false");$$(".has-dd").forEach(d=>{d.classList.remove("open");d.firstElementChild.setAttribute("aria-expanded","false")})}
+burger.onclick=()=>{const o=nav.classList.toggle("open");burger.setAttribute("aria-expanded",o)};
+$$(".has-dd>button").forEach(b=>b.onclick=e=>{e.stopPropagation();const p=b.parentElement,o=p.classList.toggle("open");b.setAttribute("aria-expanded",o)});
+document.addEventListener("click",e=>{if(!e.target.closest(".has-dd"))$$(".has-dd").forEach(d=>{d.classList.remove("open");d.firstElementChild.setAttribute("aria-expanded","false")})});
+nav.addEventListener("click",e=>{if(e.target.closest("a")||e.target.closest("[data-quote]"))closeNav()});
+
+/* overlays */
+let lastFocus;
+function openOv(el){lastFocus=document.activeElement;el.classList.add("open");document.body.classList.add("lock");const f=el.querySelector("button.x,input,button");f&&f.focus()}
+function closeOv(el){el.classList.remove("open");if(!$$(".ov.open").length)document.body.classList.remove("lock");lastFocus&&lastFocus.focus&&lastFocus.focus()}
+$$(".ov").forEach(o=>o.addEventListener("click",e=>{if(e.target===o||e.target.closest("[data-close]"))closeOv(o)}));
+addEventListener("keydown",e=>{if(e.key==="Escape"){const o=[...$$(".ov.open")].pop();o?closeOv(o):(closeNav(),df(false))}});
+
+/* cart (lista zapytania) */
+let cart=[];try{cart=JSON.parse(localStorage.getItem("st_cart")||"[]").filter(i=>prod(i.id))}catch(e){}
+const save=()=>{try{localStorage.setItem("st_cart",JSON.stringify(cart))}catch(e){}};
+const total=()=>cart.reduce((s,i)=>s+i.q,0);
+function toast(msg,action){const t=$("#toast");t.innerHTML=`<span>${msg}</span>`+(action?`<button id="tact">${action}</button>`:"");t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("on"),3500);const b=$("#tact");if(b)b.onclick=()=>{t.classList.remove("on");openCart()}}
+function addToCart(id,q=1){const i=cart.find(x=>x.id===id);i?i.q=Math.min(99,i.q+q):cart.push({id,q});save();updateCart();const b=$("#badge");b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop");toast(`Dodano: ${esc(prod(id).n)}`,"Zobacz listę")}
+function updateCart(){
+ const n=total(),b=$("#badge");b.textContent=n;b.classList.toggle("on",n>0);
+ $("#cbody").innerHTML=cart.length?cart.map(i=>{const p=prod(i.id);return `<div class="ci"><div class="t">${img(p.img,p.n)}</div><div><h4>${p.n}</h4><small>${cat(p.c).n}</small><div class="r"><div class="qty"><button data-dec="${i.id}" aria-label="Mniej">–</button><output>${i.q}</output><button data-inc="${i.id}" aria-label="Więcej">+</button></div><button class="rm" data-rm="${i.id}">Usuń</button></div></div></div>`}).join(""):`<div class="cempty"><svg class="ico" style="width:48px;height:48px"><use href="#i-cart"/></svg><p><b>Lista zapytania jest pusta</b></p><p style="margin:6px 0 20px">Dodaj produkty, aby wysłać jedno zapytanie o wycenę.</p><a class="btn btn-o btn-sm" href="#oferta" data-close>Przeglądaj ofertę</a></div>`;
+ $("#cfoot").innerHTML=cart.length?`<div class="sum"><span>Pozycje: ${cart.length}</span><span>Sztuk: ${n}</span></div><button class="btn btn-p" id="sendq">Wyślij zapytanie o ofertę</button><button class="btn btn-o btn-sm" id="clearcart">Wyczyść listę</button><small>Ceny ustalamy indywidualnie — nie ma płatności online.</small>`:"";
+ const s=$("#sendq");if(s)s.onclick=()=>{closeOv($("#cart"));openQuote(true)};
+ const c=$("#clearcart");if(c)c.onclick=()=>{cart=[];save();updateCart()};
+}
+function openCart(){updateCart();openOv($("#cart"))}
+$("#cart").addEventListener("click",e=>{
+ const g=a=>e.target.closest(`[${a}]`);let t;
+ if(t=g("data-inc")){const i=cart.find(x=>x.id===t.dataset.inc);i.q=Math.min(99,i.q+1)}
+ else if(t=g("data-dec")){const i=cart.find(x=>x.id===t.dataset.dec);i.q=Math.max(1,i.q-1)}
+ else if(t=g("data-rm")){cart=cart.filter(x=>x.id!==t.dataset.rm)}
+ else return;save();updateCart();
+});
+$("#cartbtn").onclick=openCart;
+
+/* product modal */
+let pq=1;
+function openProduct(id){
+ const p=prod(id),c=cat(p.c);pq=1;
+ const rel=P.filter(x=>x.id!==id).sort((a,b)=>(b.c===p.c)-(a.c===p.c)).slice(0,4);
+ const specs=[["Kategoria",c.n],...(p.t?[["Typ konstrukcji",p.t]]:[]),["Producent","Stachurski"],["Wymiary",null],["Nośność",null],["Wykonanie","Dostosowanie do potrzeb — na zapytanie"],["Cena",null]];
+ $("#pmbox").innerHTML=`<button class="x" data-close aria-label="Zamknij">×</button>
+ <div class="pd"><div class="gal"><div class="gimg" id="gimg" title="Kliknij, aby powiększyć">${img(p.img,p.n+" — Stachurski",false)}</div><small>Kliknij zdjęcie, aby powiększyć. Zdjęcie poglądowe.</small></div>
+ <div class="info"><span class="cl">${c.n}${p.t?" · "+p.t:""}</span><h2 id="pmt">${p.n}</h2><p class="lead">${p.d}</p>
+ <table class="spec"><tbody>${specs.map(([k,v])=>`<tr><th>${k}</th><td class="${v?"":"na"}">${v||NA}</td></tr>`).join("")}</tbody></table>
+ <div class="buy"><div class="qty"><button id="qd" aria-label="Mniej">–</button><output id="qv" aria-live="polite">1</output><button id="qi" aria-label="Więcej">+</button></div><button class="btn btn-p" id="padd">Dodaj do listy zapytania</button></div>
+ <button class="btn btn-o" id="pask">Zapytaj o cenę tego produktu</button>
+ <ul class="ticks"><li>Wycena indywidualna</li><li>Możliwość dopasowania do potrzeb</li><li>Polski producent od 1974 roku</li></ul>
+ <div><details><summary>Jak zamówić?</summary><ol><li>Dodaj produkty do listy zapytania.</li><li>Wyślij zapytanie jednym formularzem.</li><li>Otrzymasz ofertę dopasowaną do potrzeb.</li></ol></details><details><summary>Wymiary i nośność</summary><p>Parametry techniczne podajemy na zapytanie, aby dobrać wykonanie do Twojego zastosowania.</p></details></div>
+ </div></div>
+ <div class="rel"><h3>Zobacz także</h3><div class="relg">${rel.map(r=>`<button class="card" data-open="${r.id}"><div class="im">${img(r.img,r.n)}</div><div class="tx"><span>${r.n}</span></div></button>`).join("")}</div></div>`;
+ openOv($("#pm"));$("#pmbox").scrollTop=0;
+ const g=$("#gimg");g.onclick=()=>g.classList.toggle("z");g.onmousemove=e=>{if(g.classList.contains("z")){const r=g.getBoundingClientRect();g.firstElementChild.style.transformOrigin=`${(e.clientX-r.left)/r.width*100}% ${(e.clientY-r.top)/r.height*100}%`}};
+ $("#qd").onclick=()=>{pq=Math.max(1,pq-1);$("#qv").textContent=pq};$("#qi").onclick=()=>{pq=Math.min(99,pq+1);$("#qv").textContent=pq};
+ $("#padd").onclick=()=>addToCart(id,pq);
+ $("#pask").onclick=()=>{closeOv($("#pm"));openQuote(false,`Dzień dobry,\nproszę o wycenę produktu: ${p.n} (ilość: ${pq}).\n`)};
+}
+
+/* quote */
+function openQuote(fromCart,text){
+ const f=$("#form");$("#res").innerHTML="";
+ if(text)f.msg.value=text;
+ else if(fromCart||cart.length){f.msg.value="Dzień dobry,\nproszę o wycenę następujących produktów:\n"+cart.map(i=>`- ${prod(i.id).n} — ${i.q} szt.`).join("\n")+"\n"}
+ else if(!f.msg.value)f.msg.value="";
+ openOv($("#qm"));
+}
+
+/* global clicks */
+document.addEventListener("click",e=>{
+ let t;
+ if(t=e.target.closest("[data-open]")){const id=t.dataset.open;if($("#pm").classList.contains("open"))closeOv($("#pm"));openProduct(id);return}
+ if(t=e.target.closest("[data-add]")){addToCart(t.dataset.add);return}
+ if(e.target.closest("[data-open-cart]")){closeNav();openCart();return}
+ if(e.target.closest("[data-quote]")){closeNav();openQuote();return}
+ if(e.target.closest("[data-clear]")){clearAll()}
+});
+
+/* form */
+$("#form").addEventListener("submit",async e=>{
+ e.preventDefault();const f=e.target;let ok=true;
+ const chk=(n,m,test)=>{const i=f[n],er=i.parentElement.querySelector(".err"),bad=!test(i.value.trim());i.classList.toggle("bad",bad);i.setAttribute("aria-invalid",bad);if(er)er.textContent=bad?m:"";if(bad)ok=false};
+ chk("name","Podaj imię i nazwisko.",v=>v.length>1);
+ chk("email","Podaj poprawny adres e-mail.",v=>/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v));
+ chk("msg","Wpisz krótką wiadomość.",v=>v.length>4);
+ const res=$("#res");
+ if(!ok){res.innerHTML='<div class="err">Popraw zaznaczone pola.</div>';return}
+ if(!FORM_ENDPOINT){res.innerHTML='<div class="note"><b>Tryb demo:</b> formularz jest poprawny, ale wiadomość nie została wysłana. Połącz usługę wysyłki (FORM_ENDPOINT).</div>';return}
+ try{const r=await fetch(FORM_ENDPOINT,{method:"POST",headers:{Accept:"application/json"},body:new FormData(f)});
+  if(!r.ok)throw 0;res.innerHTML='<div class="ok">Dziękujemy! Zapytanie zostało wysłane.</div>';f.reset();cart=[];save();updateCart()}
+ catch{res.innerHTML='<div class="err">Nie udało się wysłać. Spróbuj ponownie później.</div>'}
+});
+
+updateCart();route();
+</script>
+</body>
+</html>

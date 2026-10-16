@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LuckBox — Spin. Pick. Get Lucky.</title>
+<meta name="description" content="Spin the wheel, choose a mystery box and reveal your prize. Verifiable fair-play draws.">
+<style>
+:root{--bg:#0b0d14;--bg2:#121622;--card:#171c2b;--line:#262d42;--tx:#eef0f6;--mu:#98a0b8;--gold:#f5b942;--gold2:#ffdd8a;--ac:#7c6cff;--ok:#3ddc97;--bad:#ff6b7a;--r:18px}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:radial-gradient(900px 500px at 50% -10%,#1d2140,transparent),var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{width:min(1120px,100% - 32px);margin:auto}
+h1,h2,h3{line-height:1.1;letter-spacing:-.02em}
+h1{font-size:clamp(2.2rem,6vw,4rem)}
+h2{font-size:clamp(1.6rem,3.5vw,2.4rem);margin-bottom:.5rem}
+.mu{color:var(--mu)}
+.gold{background:linear-gradient(90deg,var(--gold2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+header{position:sticky;top:0;z-index:20;background:#0b0d14d9;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-weight:800;font-size:1.2rem;letter-spacing:.04em}
+.nav nav{display:flex;gap:26px;align-items:center}
+.nav nav a{color:var(--mu);font-size:.95rem;transition:color .2s}
+.nav nav a:hover{color:var(--tx)}
+.burger{display:none;background:none;border:1px solid var(--line);color:var(--tx);border-radius:10px;width:44px;height:44px;font-size:1.3rem;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font:700 1rem inherit;font-family:inherit;padding:14px 28px;border-radius:999px;color:#1a1204;background:linear-gradient(180deg,var(--gold2),var(--gold));box-shadow:0 8px 28px #f5b94238;transition:transform .15s,box-shadow .2s,opacity .2s;min-height:48px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 34px #f5b94255}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn.sec{background:transparent;color:var(--tx);border:1px solid var(--line);box-shadow:none}
+.btn.sm{padding:8px 14px;min-height:36px;font-size:.85rem}
+.btn.dg{background:#3a1820;color:var(--bad);border:1px solid #5a2430;box-shadow:none}
+.hero{display:grid;grid-template-columns:1fr 1.05fr;gap:40px;align-items:center;padding:48px 0 64px}
+.hero p.lead{font-size:1.1rem;color:var(--mu);margin:18px 0 26px;max-width:46ch}
+.pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.pill{font-size:.82rem;color:var(--mu);border:1px solid var(--line);border-radius:99px;padding:6px 12px}
+.stage{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:28px;padding:24px 16px;box-shadow:0 30px 80px #0008;min-height:470px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+.view{display:none;width:100%;flex-direction:column;align-items:center;gap:16px;animation:in .45s ease}
+.view.on{display:flex}
+@keyframes in{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.wheelbox{position:relative;width:min(320px,78vw);aspect-ratio:1}
+.wheelbox svg{width:100%;height:100%;transition:transform 3.4s cubic-bezier(.12,.72,.1,1);will-change:transform;filter:drop-shadow(0 10px 30px #f5b94233)}
+.ptr{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:0;height:0;border:13px solid transparent;border-top:26px solid var(--gold2);filter:drop-shadow(0 2px 4px #000a);z-index:2}
+.hub{position:absolute;inset:50% auto auto 50%;width:54px;height:54px;transform:translate(-50%,-50%);border-radius:50%;background:var(--bg);border:3px solid var(--gold);display:grid;place-items:center;font-weight:800;color:var(--gold)}
+.boxes{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:12px;width:100%;max-width:520px}
+.box{aspect-ratio:.9;border-radius:18px;border:1px solid #3b4263;background:linear-gradient(160deg,#272e48,#171c2b);color:var(--gold);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-weight:700;box-shadow:0 0 0 0 #f5b94200,0 10px 24px #0006;transition:transform .2s,box-shadow .25s,border-color .2s,opacity .3s;position:relative;font-family:inherit;padding:6px}
+.box svg{width:52%;height:auto}
+.box:hover:not(:disabled){transform:translateY(-8px);border-color:var(--gold);box-shadow:0 0 28px #f5b94244,0 16px 30px #0007}
+.box:active:not(:disabled){transform:scale(.95)}
+.box:disabled{cursor:default}
+.box.dim{opacity:.35;transform:scale(.94)}
+.box.shake{animation:shake .6s}
+.box.open{animation:pop .5s forwards;border-color:var(--gold);box-shadow:0 0 50px #f5b94266}
+@keyframes shake{0%,100%{transform:rotate(0)}15%{transform:rotate(-7deg)}35%{transform:rotate(7deg)}55%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+@keyframes pop{0%{transform:scale(1)}60%{transform:scale(1.2)}100%{transform:scale(1.1)}}
+.res{width:min(150px,40vw);aspect-ratio:1;border-radius:22px;border:1px solid var(--gold);background:#0b0d14;object-fit:cover;box-shadow:0 0 50px #f5b94244}
+.tag{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.vfy{font-size:.78rem;color:var(--mu);word-break:break-all;max-width:440px;background:#0b0d1480;border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;width:100%}
+.vfy code{color:var(--gold2);font-size:.74rem}
+.cf{position:absolute;top:-10px;width:8px;height:14px;border-radius:2px;animation:fall 2.2s ease-in forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(560px) rotate(540deg);opacity:0}}
+section.s{padding:72px 0;border-top:1px solid var(--line)}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:30px}
+.card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--r);padding:22px;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:#3b4263}
+.card .n{color:var(--gold);font-weight:800;font-size:.9rem;letter-spacing:.14em}
+.card img{aspect-ratio:1;width:100%;object-fit:cover;border-radius:12px;margin-bottom:14px;background:#0b0d14}
+.card h3{font-size:1.1rem;margin:6px 0}
+ul.ck{list-style:none;padding:0;display:grid;gap:10px;margin-top:20px}
+ul.ck li:before{content:"✓";color:var(--ok);margin-right:10px;font-weight:800}
+footer{border-top:1px solid var(--line);padding:36px 0;color:var(--mu);font-size:.9rem}
+.fl{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.fl nav{display:flex;gap:18px;flex-wrap:wrap}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);background:var(--card);border:1px solid var(--line);padding:12px 18px;border-radius:12px;opacity:0;pointer-events:none;transition:.3s;z-index:60;max-width:90vw}
+#toast.on{opacity:1;transform:translateX(-50%)}
+#toast.err{border-color:var(--bad)}
+/* admin */
+#adm{position:fixed;inset:0;background:#05060bf2;z-index:50;display:none;overflow:auto;padding:16px}
+#adm.on{display:block}
+.ap{max-width:980px;margin:0 auto;background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:20px}
+.ah{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button{background:none;border:1px solid var(--line);color:var(--mu);padding:9px 16px;border-radius:99px;cursor:pointer;font-family:inherit;min-height:40px}
+.tabs button.on{background:var(--gold);color:#1a1204;border-color:var(--gold);font-weight:700}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:640px}
+th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;font-size:.9rem;vertical-align:middle}
+th{color:var(--mu);font-weight:600}
+input,select{background:#0b0d14;border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px 12px;font:inherit;width:100%;min-height:42px}
+td input[type=number]{width:90px}
+.th{width:44px;height:44px;border-radius:8px;object-fit:cover;background:#0b0d14}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.kp div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.kp b{display:block;font-size:1.7rem;color:var(--gold)}
+.bar{display:flex;align-items:flex-end;gap:6px;height:120px;margin:10px 0 24px}
+.bar i{flex:1;background:linear-gradient(var(--gold2),var(--gold));border-radius:4px 4px 0 0;min-height:3px;position:relative}
+.msg{padding:10px 14px;border-radius:10px;margin:10px 0;font-size:.9rem}
+.msg.e{background:#3a1820;color:var(--bad)}
+.msg.o{background:#12352a;color:var(--ok)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+@media(max-width:820px){
+.hero{grid-template-columns:1fr;padding-top:28px;text-align:center}
+.hero p.lead{margin-inline:auto}.pills{justify-content:center}
+.burger{display:block}
+.nav nav{display:none;position:absolute;top:64px;left:0;right:0;background:var(--bg2);flex-direction:column;padding:18px;gap:16px;border-bottom:1px solid var(--line)}
+.nav nav.on{display:flex}
+.fl{flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+<a class="logo" href="#top" aria-label="LuckBox home">LUCK<span class="gold">BOX</span></a>
+<button class="burger" id="bg" aria-label="Open menu" aria-expanded="false">☰</button>
+<nav id="nv" aria-label="Main"><a href="#play">Game</a><a href="#rewards">Rewards</a><a href="#how">How It Works</a><a href="#fair">Fair Play</a><a class="btn sm" href="#play">SPIN NOW</a></nav>
+</div></header>
+
+<main id="top">
+<div class="wrap hero" id="play">
+<div>
+<p class="tag">Premium prize game</p>
+<h1>SPIN. PICK.<br><span class="gold">GET LUCKY.</span></h1>
+<p class="lead">Spin the wheel, choose one of the mystery boxes and see instantly if luck is on your side. Every draw is committed before you pick and can be verified after.</p>
+<button class="btn" id="cta">SPIN NOW</button>
+<div class="pills"><span class="pill">🔒 Secure random draw</span><span class="pill">✔ Verifiable result</span><span class="pill">⚡ Instant reveal</span></div>
+</div>
+
+<div class="stage" aria-live="polite">
+<div class="view on" id="vSpin">
+<p class="tag">Step 1 · Spin</p>
+<div class="wheelbox"><div class="ptr"></div><svg id="wh" viewBox="-100 -100 200 200" role="img" aria-label="Prize wheel"></svg><div class="hub">★</div></div>
+<button class="btn" id="spin">SPIN THE WHEEL</button>
+</div>
+<div class="view" id="vPick">
+<p class="tag">Step 2 · Pick</p>
+<h2>CHOOSE YOUR LUCKY BOX</h2>
+<p class="mu">One choice. One reveal.</p>
+<div class="boxes" id="boxes"></div>
+<div class="vfy">Fair-play commitment (SHA-256 of the secret seed, locked before you pick):<br><code id="commit"></code></div>
+</div>
+<div class="view" id="vRes">
+<p class="tag" id="rTag"></p>
+<img class="res" id="rImg" alt="">
+<h2 id="rTitle"></h2>
+<p class="mu" id="rSub"></p>
+<div class="vfy"><span id="vfyTxt">Seed: <code id="seed"></code></span><br><button class="btn sm sec" id="vbtn" style="margin-top:8px">Verify this draw</button> <span id="vout"></span></div>
+<div class="row" style="justify-content:center"><button class="btn" id="again">PLAY AGAIN</button><a class="btn sec" href="#rewards">VIEW REWARDS</a></div>
+</div>
+</div>
+</div>
+
+<section class="s" id="rewards"><div class="wrap"><h2>Featured <span class="gold">Rewards</span></h2><p class="mu">Prizes currently in the draw.</p><div class="grid" id="rw"></div></div></section>
+
+<section class="s" id="how"><div class="wrap"><h2>How it works</h2><div class="grid">
+<div class="card"><span class="n">01 — SPIN</span><h3>Spin the wheel</h3><p class="mu">Tap spin and watch the wheel set the stage.</p></div>
+<div class="card"><span class="n">02 — PICK</span><h3>Choose a box</h3><p class="mu">Several identical mystery boxes appear. Pick exactly one.</p></div>
+<div class="card"><span class="n">03 — REVEAL</span><h3>See your result</h3><p class="mu">Your box opens to show a prize or a friendly try-again.</p></div>
+</div></div></section>
+
+<section class="s" id="fair"><div class="wrap"><h2>Fair <span class="gold">Play</span></h2>
+<p class="mu" style="max-width:62ch">Every round uses a secret seed created with the server's cryptographically secure generator (PHP <code>random_int</code> / <code>random_bytes</code>), never browser <code>Math.random()</code>. The wheel animation is cosmetic only and does not affect the outcome.</p>
+<ul class="ck">
+<li>A SHA-256 commitment to the outcome is shown <b>before</b> you pick.</li>
+<li>The outcome is decided on the server and stored before you pick; your browser never knows it in advance.</li>
+<li>After the reveal the committed data is shown, so you can re-hash it and confirm it was not changed.</li>
+<li>Odds are configurable and validated to never exceed 100%.</li>
+<li>Each round has a unique game ID and timestamp recorded in the play history.</li>
+</ul></div></section>
+
+<section class="s"><div class="wrap" style="text-align:center"><h2>Ready to feel <span class="gold">lucky?</span></h2><p class="mu" style="margin-bottom:22px">One spin is all it takes.</p><a class="btn" href="#play">SPIN NOW</a></div></section>
+</main>
+
+<footer><div class="wrap fl"><div><b class="logo">LUCK<span class="gold">BOX</span></b><p>© <span id="yr"></span> LuckBox. All rights reserved || Designed by Developer Nayem.</p></div>
+<nav><a href="#play">Game</a><a href="#rewards">Rewards</a><a href="#how">How It Works</a><a href="#fair">Fair Play</a><a href="admin.php">Admin</a><a href="#top">Terms</a><a href="#top">Privacy</a></nav></div></footer>
+
+<div id="toast" role="status"></div>
+
+
+<script>
+(()=>{
+"use strict";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const PH="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#171c2b"/><rect x="24" y="42" width="52" height="38" rx="4" fill="#f5b942"/><rect x="20" y="32" width="60" height="14" rx="4" fill="#ffdd8a"/><rect x="46" y="32" width="8" height="48" fill="#7c6cff"/><path d="M50 32c-12-16-26-4-14 0zM50 32c12-16 26-4 14 0z" fill="#ffdd8a"/></svg>');
+const DEF={boxes:3,prizes:[
+{id:1,name:"Gold Voucher",value:"$100",odds:5,img:"",on:1},
+{id:2,name:"Wireless Earbuds",value:"$60",odds:10,img:"",on:1},
+{id:3,name:"Gift Card",value:"$25",odds:15,img:"",on:1},
+{id:4,name:"Bonus Pack",value:"$10",odds:20,img:"",on:1}]};
+const store={get(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){toast("Storage full or blocked",1);return false}}};
+let cfg=store.get("lb_cfg",DEF);
+let hist=store.get("lb_hist",[]);
+const act=()=>cfg.prizes.filter(p=>p.on&&p.odds>0);
+const toast=(m,e)=>{const t=$("#toast");t.textContent=m;t.className="on"+(e?" err":"");clearTimeout(toast.t);toast.t=setTimeout(()=>t.className="",2800)};
+const hex=b=>[...b].map(x=>x.toString(16).padStart(2,"0")).join("");
+const sha=async s=>{if(!crypto.subtle)throw new Error("HTTPS required");return hex(new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s))))};
+const rnd=n=>{const a=new Uint32Array(1),lim=Math.floor(4294967296/n)*n;do crypto.getRandomValues(a);while(a[0]>=lim);return a[0]%n};
+const img=(p,cls,alt)=>`<img ${cls?`class="${cls}"`:""} src="${esc(p.img||PH)}" alt="${esc(alt||p.name)}" loading="lazy" onerror="this.onerror=null;this.src='${PH}'">`;
+
+/* header / footer */
+$("#yr").textContent=new Date().getFullYear();
+$("#bg").onclick=()=>{const n=$("#nv"),o=n.classList.toggle("on");$("#bg").setAttribute("aria-expanded",o)};
+$("#nv").onclick=e=>{if(e.target.tagName==="A")$("#nv").classList.remove("on")};
+
+/* rewards */
+async function renderRewards(){let a=[];try{a=(await api("prizes")).prizes}catch(e){}
+$("#rw").innerHTML=a.length?a.map(p=>`<div class="card">${img({name:p.name,img:p.image?"uploads/"+p.image:""})}<span class="n">${esc(p.value||"")}</span><h3>${esc(p.name)}</h3><p class="mu">${esc(p.description||"Available in the draw")}</p></div>`).join(""):'<p class="mu">No prizes available right now.</p>'}
+
+/* wheel (cosmetic) */
+function buildWheel(){
+let s="";const N=10;
+for(let i=0;i<N;i++){const a0=(i*360/N-90)*Math.PI/180,a1=((i+1)*360/N-90)*Math.PI/180,m=(a0+a1)/2;
+s+=`<path d="M0 0L${95*Math.cos(a0)} ${95*Math.sin(a0)}A95 95 0 0 1 ${95*Math.cos(a1)} ${95*Math.sin(a1)}Z" fill="${i%2?"#222842":"#f5b942"}" stroke="#0b0d14" stroke-width="1.5"/><text x="${66*Math.cos(m)}" y="${66*Math.sin(m)}" font-size="13" text-anchor="middle" dominant-baseline="central" fill="${i%2?"#f5b942":"#1a1204"}" transform="rotate(${i*360/N+18-90+90} ${66*Math.cos(m)} ${66*Math.sin(m)})">${i%2?"✦":"★"}</text>`;}
+$("#wh").innerHTML=`<circle r="98" fill="none" stroke="#ffdd8a" stroke-width="3"/>`+s;}
+
+/* game state */
+let state="idle",game=null,rot=0;
+const show=id=>{document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id===id))};
+function reset(){state="idle";game=null;document.querySelectorAll(".cf").forEach(c=>c.remove());$("#boxes").innerHTML="";$("#vout").textContent="";$("#spin").disabled=false;$("#spin").textContent="SPIN THE WHEEL";show("vSpin")}
+$("#cta").onclick=()=>{document.getElementById("play").scrollIntoView({block:"center"});if(state==="idle")startSpin()};
+$("#spin").onclick=startSpin;
+$("#again").onclick=()=>{reset();toast("New round ready")};
+
+async function startSpin(){
+if(state!=="idle")return;
+state="spinning";$("#spin").disabled=true;$("#spin").textContent="SPINNING…";
+try{const r=await api("start");game={id:r.game_id,commit:r.commit,n:r.boxes}}catch(e){state="idle";$("#spin").disabled=false;$("#spin").textContent="SPIN THE WHEEL";toast(e.message,1);return}
+const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+rot+=360*5+rnd(360); // cosmetic only
+const w=$("#wh");w.style.transform=`rotate(${rot}deg)`;
+let done=false;const fin=()=>{if(done)return;done=true;toPick()};
+w.addEventListener("transitionend",fin,{once:true});setTimeout(fin,reduce?50:3700);
+}
+
+function toPick(){
+const n=game.n,bx=$("#boxes");
+bx.style.setProperty("--n",n>4?3:n);
+bx.innerHTML=Array.from({length:n},(_,i)=>`<button class="box" data-i="${i}" aria-label="Mystery box ${i+1}"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><rect x="8" y="26" width="48" height="30" rx="4"/><rect x="5" y="16" width="54" height="12" rx="4"/><path d="M32 16v40M32 16C22 4 12 10 20 16M32 16c10-12 20-6 12 0"/></svg><span>#${i+1}</span></button>`).join("");
+$("#commit").textContent=game.commit;
+state="pick";show("vPick");
+}
+$("#boxes").onclick=e=>{const b=e.target.closest(".box");if(b&&state==="pick")choose(+b.dataset.i,b)};
+
+async function choose(i,el){
+if(state!=="pick")return;state="reveal";
+const all=[...document.querySelectorAll(".box")];
+all.forEach(b=>{b.disabled=true;if(b!==el)b.classList.add("dim")});
+el.classList.add("shake");
+try{
+const out=await api("pick",{game_id:game.id,box:i});game.box=i;game.out=out;
+setTimeout(()=>{el.classList.remove("shake");el.classList.add("open")},600);
+setTimeout(()=>result(out.win?out.prize:null),1250);
+}catch(e){state="pick";all.forEach(b=>{b.disabled=false;b.classList.remove("dim","shake")});toast(e.message,1)}
+}
+
+
+function result(p){
+const win=!!p;
+$("#rTag").textContent=win?"🎉 You won":"Result";
+const im=$("#rImg");im.style.display="block";
+im.onerror=()=>{im.onerror=null;im.src=PH};
+im.src=win?(p.img||PH):PH;im.alt=win?p.name:"Empty box";im.style.filter=win?"none":"grayscale(1) opacity(.45)";
+$("#rTitle").innerHTML=win?`Congratulations!<br><span class="gold">${esc(p.name)}</span>`:"Almost There!";
+$("#rSub").textContent=win?(p.value?"Prize value: "+p.value:"Your lucky box held a prize."):"This box wasn't lucky this time.";
+$("#again").textContent=win?"PLAY AGAIN":"TRY AGAIN";
+$("#seed").textContent=game.out.payload;
+show("vRes");state="done";
+if(win&&!matchMedia("(prefers-reduced-motion:reduce)").matches)confetti();
+}
+function confetti(){const s=$(".stage"),cl=["#f5b942","#ffdd8a","#7c6cff","#3ddc97"];
+for(let i=0;i<36;i++){const d=document.createElement("i");d.className="cf";d.style.left=rnd(100)+"%";d.style.background=cl[i%4];d.style.animationDelay=rnd(500)/1000+"s";s.appendChild(d)}
+setTimeout(()=>document.querySelectorAll(".cf").forEach(c=>c.remove()),3000)}
+$("#vbtn").onclick=async()=>{try{const ok=await sha(game.out.payload)===game.commit;$("#vout").textContent=ok?"✔ Verified: the hash of this data matches the commitment shown before you picked.":"✖ Mismatch";$("#vout").style.color=ok?"var(--ok)":"var(--bad)"}catch(e){toast("Verification needs HTTPS",1)}};
+
+async function api(a,body){let r,j;try{r=await fetch("api.php?a="+a,{method:body?"POST":"GET",headers:{"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined})}catch(e){throw new Error("Network error. Please check your connection.")}
+try{j=await r.json()}catch(e){throw new Error("Server error. Please try again.")}
+if(!r.ok||j.error)throw new Error(j.error||"Request failed");return j}
+buildWheel();renderRewards();
+})();
+</script>
+</body>
+</html>
